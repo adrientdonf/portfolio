@@ -36,6 +36,8 @@
       "main .subtitle",
       "main > .label",
       ".entries > .entry",
+      ".work-list > .wrow",
+      ".rvx",
       "main > .more",
       ".projects > .project",
       ".certs > .cert",
@@ -49,6 +51,7 @@
       return;
     }
 
+    var hasAbout = !!document.querySelector(".reveal");
     var first = true;
     var io = new IntersectionObserver(function (items) {
       var batch = items
@@ -58,7 +61,7 @@
       batch.sort(function (a, b) { return a.compareDocumentPosition(b) & 4 ? -1 : 1; });
       batch.forEach(function (el, k) {
         var d = first
-          ? (k < 3 ? k * 110 : 800 + Math.min(k - 3, 8) * 110)
+          ? (!hasAbout ? Math.min(k, 8) * 120 : (k < 3 ? k * 110 : 800 + Math.min(k - 3, 8) * 110))
           : Math.min(k, 6) * 90;
         el.style.setProperty("--rd", d + "ms");
         el.classList.add("in");
