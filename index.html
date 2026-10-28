@@ -1,852 +1,144 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="day">
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Adrien Donfack — Developer Portfolio</title>
-  <meta name="description" content="Adrien Donfack — Computer Science student at Case Western Reserve University. Full-stack developer specializing in React, Node.js, and AI-powered applications." />
-  <link rel="stylesheet" href="style.css" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous" />
-
-  <style>
-    /* ── 1. Photo: rectangle, face centered at top ─────────────── */
-    .about-photo-frame {
-      width: 220px !important;
-      height: 260px !important;
-      border-radius: 16px !important;
-      overflow: hidden;
-      margin: 0 auto 1.5rem auto;
-    }
-    .about-photo {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center top;
-      display: block;
-      border-radius: 16px;
-    }
-
-    /* ── 2. Center the stat pills row ──────────────────────────── */
-    .about-stat-row {
-      display: flex !important;
-      justify-content: center !important;
-      gap: 0.75rem !important;
-      flex-wrap: wrap;
-    }
-
-    /* ── 3. Hide the nav AD logo ───────────────────────────────── */
-    .nav-logo { display: none !important; }
-
-    /* ── 4. FontAwesome skill icons ────────────────────────────── */
-    .skill-icon-fa {
-      font-size: 1.5rem;
-      color: var(--accent, #4f8ef7);
-      width: 1.8rem;
-      text-align: center;
-    }
-
-    /* ── 5. Skill cards: varied sizes by proficiency ───────────── */
-    /* tier-1: top skills — larger card */
-    .skill-card.tier-1 { grid-column: span 1; padding: 1.8rem; }
-    .skill-card.tier-1 h3 { font-size: 1.15rem; }
-    .skill-card.tier-1 .skill-icon-fa { font-size: 2rem; }
-
-    /* tier-2: mid skills — normal */
-    .skill-card.tier-2 { padding: 1.4rem; }
-    .skill-card.tier-2 h3 { font-size: 1rem; }
-
-    /* tier-3: lower skills — compact */
-    .skill-card.tier-3 { padding: 1rem 1.2rem; }
-    .skill-card.tier-3 h3 { font-size: 0.9rem; }
-    .skill-card.tier-3 .skill-icon-fa { font-size: 1.2rem; }
-    .skill-card.tier-3 p { font-size: 0.8rem; }
-
-    /* ── 6. Timeline / edu logo icons ──────────────────────────── */
-    .tl-logo-icon {
-      width: 48px;
-      height: 48px;
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #fff;
-      font-size: 1.3rem;
-      flex-shrink: 0;
-      overflow: hidden;
-    }
-    .tl-logo-img {
-      width: 48px;
-      height: 48px;
-      border-radius: 10px;
-      object-fit: cover;
-      flex-shrink: 0;
-    }
-    .edu-school-icon {
-      width: 52px;
-      height: 52px;
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #fff;
-      font-size: 1.4rem;
-      flex-shrink: 0;
-      overflow: hidden;
-    }
-    .edu-school-img {
-      width: 52px;
-      height: 52px;
-      border-radius: 12px;
-      object-fit: cover;
-      flex-shrink: 0;
-    }
-
-    /* ── 7. Contact arrow FA ───────────────────────────────────── */
-    .clc-arrow-fa {
-      font-size: 0.9rem;
-      opacity: 0.5;
-      transition: transform 0.2s, opacity 0.2s;
-    }
-    .contact-link-card:hover .clc-arrow-fa { transform: translateX(4px); opacity: 1; }
-    .clc-icon i { font-size: 1.3rem; }
-    .chip-tech i { font-size: 0.8em; margin-right: 3px; }
-    .btn i { margin-right: 5px; font-size: 0.85em; }
-  </style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Adrien Donfack</title>
+  <meta name="description" content="Adrien Donfack, computer science student at Case Western Reserve University.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js"></script>
 </head>
 <body>
-
-<!-- NAVIGATION -->
-<nav id="navbar">
-  <div class="nav-inner">
-
-    <ul class="nav-links" id="navLinks">
-      <li><a href="#about" data-section="about">About</a></li>
-      <li><a href="#skills" data-section="skills">Skills</a></li>
-      <li><a href="#projects" data-section="projects">Projects</a></li>
-      <li><a href="#experience" data-section="experience">Experience</a></li>
-      <li><a href="#education" data-section="education">Education</a></li>
-      <li><a href="#contact" data-section="contact">Contact</a></li>
-    </ul>
-    <div class="nav-right">
-      <button id="theme-toggle" aria-label="Toggle day/night">
-        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
-        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-      </button>
-      <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
-        <span></span><span></span><span></span>
-      </button>
+  <header class="top">
+    <div class="top-inner">
+      <button id="theme-toggle" class="dot" type="button" aria-label="Switch between light and dark mode"></button>
+      <button id="menu-toggle" class="burger" type="button" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
     </div>
-  </div>
-  <div class="scroll-bar"><div class="scroll-fill" id="scrollFill"></div></div>
-</nav>
+  </header>
 
-<div class="mobile-menu" id="mobileMenu" aria-hidden="true">
-  <ul>
-    <li><a href="#about" onclick="closeMobile()">About</a></li>
-    <li><a href="#skills" onclick="closeMobile()">Skills</a></li>
-    <li><a href="#projects" onclick="closeMobile()">Projects</a></li>
-    <li><a href="#experience" onclick="closeMobile()">Experience</a></li>
-    <li><a href="#education" onclick="closeMobile()">Education</a></li>
-    <li><a href="#contact" onclick="closeMobile()">Contact</a></li>
-  </ul>
-</div>
+  <nav id="menu" class="menu spot" aria-label="Main">
+    <a href="index.html" class="active">home</a>
+    <a href="work.html">work</a>
+    <a href="projects.html">projects</a>
+    <a href="certificates.html">certificates</a>
+    <a href="contact.html">contact</a>
+  </nav>
 
-<!-- HERO -->
-<section id="hero" class="section hero-section">
-  <div class="mountain-scene" aria-hidden="true">
-    <div class="stars-layer" id="starsLayer"></div>
-    <div class="aurora" id="aurora"></div>
-    <svg class="mtn-layer mtn-l1" viewBox="0 0 1440 600" preserveAspectRatio="none">
-      <path d="M0,600 L0,380 L180,160 L360,310 L540,100 L720,280 L900,80 L1080,240 L1260,130 L1440,300 L1440,600 Z"/>
-    </svg>
-    <svg class="mtn-layer mtn-l2" viewBox="0 0 1440 500" preserveAspectRatio="none">
-      <path d="M0,500 L0,340 L130,200 L300,320 L480,120 L660,260 L840,60 L1020,210 L1200,110 L1440,250 L1440,500 Z"/>
-    </svg>
-    <svg class="mtn-layer mtn-l3" viewBox="0 0 1440 400" preserveAspectRatio="none">
-      <path d="M0,400 L0,300 L120,200 L260,300 L400,120 L580,230 L760,50 L940,190 L1100,90 L1280,200 L1440,160 L1440,400 Z"/>
-    </svg>
-    <div class="sky-gradient"></div>
-    <div class="clouds-wrap" id="cloudsWrap"></div>
-    <div class="fog-base"></div>
-    <div class="birds-wrap" id="birdsWrap"></div>
-    <div class="fireflies-wrap" id="firefliesWrap"></div>
-  </div>
-  <div class="hero-content">
-    <p class="hero-overline">Computer Science · Case Western Reserve University</p>
-    <h1 class="hero-name">
-      <span class="name-first">Adrien</span>
-      <span class="name-last">Donfack</span>
-    </h1>
-    <p class="hero-role">
-      <span class="role-text" id="roleText"></span><span class="cursor-blink">|</span>
-    </p>
-    <div class="hero-actions">
-      <a href="#projects" class="btn btn-primary">View Projects</a>
-      <a href="#contact" class="btn btn-outline">Get In Touch</a>
+  <main>
+    <h1>Adrien Donfack</h1>
+    <p class="subtitle">Computer Science Student</p>
+
+    <div class="label">about me</div>
+    <div class="about">
+      <p class="reveal">I'm a computer science student at Case Western Reserve University, and outside of class you'll usually find me with sports on. I'm a huge track and field fan, I love football, and I run 5Ks myself.</p>
+      <p class="reveal">French is my first language, and I'm minoring in it along with business management, which comes in handy when I'm explaining security to people who'd rather not hear the word &quot;packet.&quot;</p>
+      <p class="reveal">This past summer I triaged security incidents at <a class="chip" href="https://www.linkedin.com/company/mountsinainyc/posts/" target="_blank" rel="noopener"><img src="img/mount-sinai-logo.png" alt="">Mount Sinai</a>. At the same time, I built client websites at <a class="chip" href="https://www.careeraccelerator.case.edu/about" target="_blank" rel="noopener"><img src="img/gca-logo.png" alt="">Global Career Accelerator</a>.</p>
+      <p class="reveal">Before that, I led a team of 10 through high-volume rushes at <a class="chip" href="https://www.linkedin.com/company/taco-bell/home/" target="_blank" rel="noopener"><img src="img/taco-bell-logo.png" alt="">Taco Bell</a>. Now I'm vice president of <a class="chip" href="https://community.case.edu/TheBrotherhood/" target="_blank" rel="noopener"><img src="img/brotherhood-logo.png" alt="">The Brotherhood</a> and finishing my AI Resume Analyzer. I'm from Fort Worth, Texas.</p>
     </div>
-  </div>
-  <div class="scroll-indicator" aria-hidden="true">
-    <span>Scroll</span>
-    <div class="scroll-line"></div>
-  </div>
-  <div class="particles-wrap" id="particlesWrap" aria-hidden="true"></div>
-</section>
-
-<!-- ABOUT -->
-<section id="about" class="section about-section">
-  <div class="biome-tag">About</div>
-  <div class="leaves-wrap" id="leavesWrap" aria-hidden="true"></div>
-  <div class="container">
-    <div class="about-grid reveal">
-      <div class="about-visual">
-        <!-- Circular photo frame -->
-        <div class="about-photo-frame">
-          <img src="img/headshot.jpg" alt="Adrien Donfack" class="about-photo" />
-        </div>
-        <!-- Only 2 stat pills, centered -->
-        <div class="about-stat-row">
-          <div class="stat-pill glass">
-            <span class="stat-n">2+</span>
-            <span class="stat-l">Years Coding</span>
-          </div>
-          <div class="stat-pill glass">
-            <span class="stat-n">2</span>
-            <span class="stat-l">Projects</span>
-          </div>
-        </div>
-      </div>
-      <div class="about-copy">
-        <h2 class="section-heading">About Me</h2>
-        <p>I'm a Computer Science student at Case Western Reserve University with a minor in Business Management and French, building toward a career at the intersection of software engineering and real-world impact.</p>
-        <p>I build full-stack applications that solve real problems, from AI-powered platforms to production-deployed tools with thousands of users. I care deeply about clean code, good design, and shipping things that actually work.</p>
-        <p>Outside of code, I lead as Vice President of Public Relations for The Brotherhood at CWRU, negotiating partnerships and driving community engagement across campus.</p>
-        <div class="about-tags">
-          <span class="chip">Fort Worth, TX</span>
-          <span class="chip">Cleveland, OH</span>
-          <span class="chip">Open to Opportunities</span>
-          <span class="chip">Posse Scholar</span>
-        </div>
-        <a href="Adrien_Resume.pdf" download class="btn btn-primary" style="margin-top:2rem">Download Resume</a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- SKILLS -->
-<section id="skills" class="section skills-section">
-  <div class="biome-tag">Skills</div>
-  <div class="water-layer" aria-hidden="true"></div>
-  <div class="container reveal">
-    <div class="section-header centered">
-      <h2 class="section-heading">Technical Skills</h2>
-      <p class="section-sub">Languages, frameworks, and tools I work with</p>
-    </div>
-    <div class="skills-grid">
-
-      <!-- TIER 1: Strongest skills — largest cards -->
-      <div class="skill-card glass tier-1">
-        <div class="skill-top">
-          <i class="fa-brands fa-html5 skill-icon-fa"></i>
-          <h3>HTML / CSS</h3>
-        </div>
-        <p>Semantic markup, Flexbox, Grid</p>
-        <div class="skill-bar"><div class="skill-fill" data-w="93"></div></div>
-      </div>
-
-      <div class="skill-card glass tier-1">
-        <div class="skill-top">
-          <i class="fa-brands fa-github skill-icon-fa"></i>
-          <h3>Git / GitHub</h3>
-        </div>
-        <p>Version control, branching, PRs</p>
-        <div class="skill-bar"><div class="skill-fill" data-w="92"></div></div>
-      </div>
-
-      <div class="skill-card glass tier-1">
-        <div class="skill-top">
-          <i class="fa-brands fa-square-js skill-icon-fa"></i>
-          <h3>JavaScript</h3>
-        </div>
-        <p>ES6+, async/await, DOM</p>
-        <div class="skill-bar"><div class="skill-fill" data-w="90"></div></div>
-      </div>
-
-      <!-- TIER 2: Mid skills — normal cards -->
-      <div class="skill-card glass tier-2">
-        <div class="skill-top">
-          <i class="fa-brands fa-java skill-icon-fa"></i>
-          <h3>Java</h3>
-        </div>
-        <p>OOP, data structures, algorithms</p>
-        <div class="skill-bar"><div class="skill-fill" data-w="88"></div></div>
-      </div>
-
-      <div class="skill-card glass tier-2">
-        <div class="skill-top">
-          <i class="fa-brands fa-react skill-icon-fa"></i>
-          <h3>React</h3>
-        </div>
-        <p>Hooks, context, component architecture</p>
-        <div class="skill-bar"><div class="skill-fill" data-w="85"></div></div>
-      </div>
-
-      <div class="skill-card glass tier-2">
-        <div class="skill-top">
-          <i class="fa-brands fa-python skill-icon-fa"></i>
-          <h3>Python</h3>
-        </div>
-        <p>Scripting, data science, automation</p>
-        <div class="skill-bar"><div class="skill-fill" data-w="84"></div></div>
-      </div>
-
-      <div class="skill-card glass tier-2">
-        <div class="skill-top">
-          <i class="fa-brands fa-node-js skill-icon-fa"></i>
-          <h3>Node.js</h3>
-        </div>
-        <p>REST APIs, Express, middleware</p>
-        <div class="skill-bar"><div class="skill-fill" data-w="82"></div></div>
-      </div>
-
-      <div class="skill-card glass tier-2">
-        <div class="skill-top">
-          <i class="fa-solid fa-shield-halved skill-icon-fa"></i>
-          <h3>Auth / Security</h3>
-        </div>
-        <p>JWT, RBAC, secure API design</p>
-        <div class="skill-bar"><div class="skill-fill" data-w="80"></div></div>
-      </div>
-
-      <div class="skill-card glass tier-2">
-        <div class="skill-top">
-          <i class="fa-solid fa-database skill-icon-fa"></i>
-          <h3>SQL</h3>
-        </div>
-        <p>MySQL, queries, schema design</p>
-        <div class="skill-bar"><div class="skill-fill" data-w="78"></div></div>
-      </div>
-
-      <!-- TIER 3: Supporting skills — compact cards -->
-      <div class="skill-card glass tier-3">
-        <div class="skill-top">
-          <i class="fa-solid fa-brain skill-icon-fa"></i>
-          <h3>AI / LLMs</h3>
-        </div>
-        <p>RAG, Groq, vector embeddings</p>
-        <div class="skill-bar"><div class="skill-fill" data-w="75"></div></div>
-      </div>
-
-      <div class="skill-card glass tier-3">
-        <div class="skill-top">
-          <i class="fa-solid fa-terminal skill-icon-fa"></i>
-          <h3>C / C++</h3>
-        </div>
-        <p>Systems, memory management</p>
-        <div class="skill-bar"><div class="skill-fill" data-w="70"></div></div>
-      </div>
-
-      <div class="skill-card glass tier-3">
-        <div class="skill-top">
-          <i class="fa-brands fa-docker skill-icon-fa"></i>
-          <h3>Docker</h3>
-        </div>
-        <p>Containers, dev environments</p>
-        <div class="skill-bar"><div class="skill-fill" data-w="68"></div></div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<!-- PROJECTS -->
-<section id="projects" class="section projects-section">
-  <div class="biome-tag">Projects</div>
-  <div class="container reveal">
-    <div class="section-header centered">
-      <h2 class="section-heading">Projects</h2>
-      <p class="section-sub">Things I've built </p>
+    <div class="links spot reveal">
+      <a href="https://www.linkedin.com/in/adrien-donfack-134813379/" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="https://github.com/adrientdonf" target="_blank" rel="noopener">GitHub</a>
+      <a href="mailto:adrientdonf@gmail.com">Email</a>
     </div>
 
-    <div class="projects-list">
+    <div class="label">where I've been</div>
+    <div class="entries spot">
+      <details class="entry">
+        <summary>
+          <img class="logo" src="img/mount-sinai-logo.png" alt="">
+          <span><span class="org">Mount Sinai</span><span class="sep">/</span><span class="team">Cybersecurity Operations</span></span>
+        </summary>
+        <div class="detail">
+          <div class="role-row"><span class="role-chip">Cybersecurity Operations Analyst Intern</span><span class="dates">Jun 2026 → Sep 2026</span></div>
+          <p>I worked on the incident side of security operations, triaging and investigating alerts with CrowdStrike Falcon. That meant digging through host-based security events and endpoint telemetry, then writing up what I found so the team could resolve things faster.</p>
+          <p>I also kept an eye on user activity and email traffic with Abnormal AI and Proofpoint, using anomaly detection to spot suspicious behavior, phishing attempts and policy violations.</p>
+        </div>
+      </details>
 
-      <!-- TicketDesk — uses the case_.avif screenshot -->
-      <div class="project-card glass">
-        <div class="project-img-wrap">
-          <img src="img/ticket.jpg" alt="TicketDesk platform screenshot" class="project-img" onerror="this.parentElement.classList.add('img-fallback')" />
-          <div class="project-img-overlay">
-            <div class="project-img-label">IT Ticket Management</div>
-          </div>
+      <details class="entry">
+        <summary>
+          <img class="logo" src="img/gca-logo.png" alt="">
+          <span><span class="org">Global Career Accelerator</span><span class="sep">/</span><span class="team">Web Development</span></span>
+        </summary>
+        <div class="detail">
+          <div class="role-row"><span class="role-chip">Web Development Intern</span><span class="dates">Jun 2026 → Aug 2026</span></div>
+          <p>I worked with partner companies to design and deploy client-facing websites using HTML5, CSS3, JavaScript and Bootstrap.</p>
+          <p>Wireframing and AI-assisted workflows helped me prototype faster and deliver responsive, production-ready interfaces.</p>
         </div>
-        <div class="project-body">
-          <div class="project-meta">
-            <span class="project-date">May 2025 — Present</span>
-            <span class="project-badge live">Live</span>
-          </div>
-          <h3 class="project-title">TicketDesk</h3>
-          <p class="project-desc">A production-deployed IT ticket management platform built to streamline issue tracking and resolution workflows. Features role-based access control, JWT authentication, and AI-powered ticket summarization using Groq's LLaMA model.</p>
-          <ul class="project-bullets">
-            <li>Role-based access control and JWT authentication for secure multi-user access</li>
-            <li>AI-powered ticket summarization via Groq's LLaMA model</li>
-            <li>RESTful APIs supporting ticket creation, assignment, and status tracking</li>
-          </ul>
-          <div class="project-tech">
-            <span class="chip-tech">React</span>
-            <span class="chip-tech">Node.js</span>
-            <span class="chip-tech">Express.js</span>
-            <span class="chip-tech">MySQL</span>
-            <span class="chip-tech">JWT</span>
-            <span class="chip-tech">Groq LLaMA</span>
-          </div>
-          <div class="project-links">
-            <a href="https://github.com/adrientdonf" target="_blank" rel="noopener" class="btn btn-outline btn-sm">GitHub</a>
-            <a href="https://ticketdesk-kappa.vercel.app/" target="_blank" rel="noopener" class="btn btn-primary btn-sm">Live Demo</a>
-          </div>
-        </div>
-      </div>
+      </details>
 
-      <!-- AI Resume Analyzer — uses coming_soon.jpg -->
-      <div class="project-card glass reversed">
-        <div class="project-img-wrap">
-          <img src="img/coming soon.jpg" alt="AI Resume Analyzer — coming soon" class="project-img" onerror="this.parentElement.classList.add('img-fallback')" />
-          <div class="project-img-overlay">
-            <div class="project-img-label">AI-Powered Analysis</div>
-          </div>
+      <details class="entry">
+        <summary>
+          <img class="logo" src="img/brotherhood-logo.png" alt="">
+          <span><span class="org">The Brotherhood</span><span class="sep">/</span><span class="team">Student Organization</span></span>
+        </summary>
+        <div class="detail">
+          <div class="role-row"><span class="role-chip">Vice President</span><span class="dates">Sep 2024 → <span class="now">Present</span></span></div>
+          <p>I led event marketing for the fall semester, promoting across channels, and average attendance grew 30%, from about 45 to 60+.</p>
+          <p>I also negotiated one unified campus calendar with 5 student orgs, which prevented 3 major scheduling conflicts and saved an estimated $500 in wasted venue booking fees.</p>
         </div>
-        <div class="project-body">
-          <div class="project-meta">
-            <span class="project-date">April 2025 — Present</span>
-            <span class="project-badge wip">In Progress</span>
-          </div>
-          <h3 class="project-title">AI Resume Analyzer</h3>
-          <p class="project-desc">An AI-powered resume analysis platform using Retrieval-Augmented Generation and vector embeddings to evaluate resumes against job descriptions, identify skill gaps, and generate personalized upskilling recommendations.</p>
-          <ul class="project-bullets">
-            <li>RAG pipeline with vector embeddings for semantic resume-to-job matching</li>
-            <li>Identifies skill gaps and generates personalized upskilling recommendations</li>
-            <li>Document parsing and similarity search beyond traditional keyword approaches</li>
-          </ul>
-          <div class="project-tech">
-            <span class="chip-tech">Python</span>
-            <span class="chip-tech">RAG</span>
-            <span class="chip-tech">Vector Embeddings</span>
-            <span class="chip-tech">NLP</span>
-          </div>
-          <div class="project-links">
-            <a href="https://github.com/adrientdonf" target="_blank" rel="noopener" class="btn btn-outline btn-sm">GitHub</a>
-          </div>
-        </div>
-      </div>
-
+      </details>
     </div>
-  </div>
-</section>
+    <p class="more"><a href="work.html">see more →</a></p>
 
-<!-- EXPERIENCE -->
-<section id="experience" class="section experience-section">
-  <div class="biome-tag">Experience</div>
-  <div class="snowflakes-wrap" id="snowflakesWrap" aria-hidden="true"></div>
-  <div class="container reveal">
-    <div class="section-header centered">
-      <h2 class="section-heading">Experience</h2>
-      <p class="section-sub">Where I've contributed and grown</p>
-    </div>
-    <div class="timeline">
-
-      <div class="tl-item">
-        <div class="tl-connector">
-          <div class="tl-dot"></div>
-          <div class="tl-line"></div>
-        </div>
-        <div class="tl-card glass">
-          <div class="tl-head">
-            <div>
-              <span class="tl-date">February 2025 — April 2025</span>
-              <h3>Social Media Manager</h3>
-              <h4>Posse Foundation · Cleveland, Ohio</h4>
-            </div>
-            <img src="img/posse.jpg" alt="Posse Foundation" class="tl-logo-img" />
-          </div>
-          <ul class="tl-bullets">
-            <li>Directed media coverage for the annual retreat (70 attendees), capturing 300+ photos and videos to populate a 3-month content calendar for the organization's digital channels.</li>
-            <li>Coordinated with 13 speakers and organizers to ensure clear audio and video coverage, reducing technical interruptions by over 90% compared to prior year.</li>
-            <li>Produced 15 short-form recap videos from 5 hours of raw footage, increasing content accessibility for 200+ alumni and boosting post-event engagement.</li>
-          </ul>
-          <div class="tl-tags">
-            <span class="chip-tech">Content Strategy</span>
-            <span class="chip-tech">Video Production</span>
-            <span class="chip-tech">Social Media</span>
-          </div>
+    <div class="label">things I've built</div>
+    <div class="projects spot">
+      <div class="project">
+        <div class="project-head"><span class="project-name">TicketDesk</span><span class="badge live">live</span></div>
+        <p>A full-stack IT ticket platform with login, role-based access and AI ticket summaries.</p>
+        <div class="project-links">
+          <a href="https://ticketdesk-kappa.vercel.app/" target="_blank" rel="noopener">demo</a>
+          <a href="https://github.com/adrientdonf/it-ticket-system" target="_blank" rel="noopener">github</a>
         </div>
       </div>
 
-      <div class="tl-item">
-        <div class="tl-connector">
-          <div class="tl-dot"></div>
-          <div class="tl-line"></div>
-        </div>
-        <div class="tl-card glass">
-          <div class="tl-head">
-            <div>
-              <span class="tl-date">May 2024 — August 2024</span>
-              <h3>Shift Lead</h3>
-              <h4>Taco Bell · Dallas, Texas</h4>
-            </div>
-            <img src="img/taco.jpg" alt="Taco Bell" class="tl-logo-img" />
-          </div>
-          <ul class="tl-bullets">
-            <li>Directed a team of 10 crew members during high-volume windows, increasing order bandwidth by 15% (approx. 20 extra orders/hour) by optimizing prep-line station rotation.</li>
-            <li>Managed cash handling, deposits, and inventory counts, consistently maintaining 100% accuracy and reducing food waste by 6% through improved portion control and labeling.</li>
-            <li>Handled opening/closing procedures, cash management, inventory checks, and resolved customer issues to ensure smooth store operations.</li>
-          </ul>
-          <div class="tl-tags">
-            <span class="chip-tech">Team Leadership</span>
-            <span class="chip-tech">Operations</span>
-            <span class="chip-tech">Inventory</span>
-          </div>
+      <div class="project">
+        <div class="project-head"><span class="project-name">L'Oréal Beauty Advisor</span><span class="badge live">live</span></div>
+        <p>An AI chatbot that recommends products and builds routines, with requests routed through a Cloudflare Workers proxy.</p>
+        <div class="project-links">
+          <a href="https://adrientdonf.github.io/loreal-beauty-advisor/" target="_blank" rel="noopener">demo</a>
+          <a href="https://github.com/adrientdonf/loreal-beauty-advisor" target="_blank" rel="noopener">github</a>
         </div>
       </div>
 
-    </div>
-  </div>
-</section>
-
-<!-- EDUCATION -->
-<section id="education" class="section education-section">
-  <div class="biome-tag">Education</div>
-  <div class="container reveal">
-    <div class="section-header centered">
-      <h2 class="section-heading">Education</h2>
-    </div>
-    <div class="edu-grid">
-
-      <div class="edu-card glass">
-        <div class="edu-top">
-          <img src="img/case .jpg" alt="Case Western Reserve University" class="edu-school-img" />
-          <div>
-            <span class="edu-dates">August 2024 — May 2028</span>
-            <h3>Bachelor of Arts in Computer Science</h3>
-            <h4>Case Western Reserve University · Cleveland, Ohio</h4>
-            <p class="edu-minor">Minor in Business Management and French</p>
-          </div>
-        </div>
-        <div class="edu-highlight">
-          <div class="highlight-pill">Posse Full Tuition Leadership Scholarship (2024-2028)</div>
-        </div>
-        <div class="edu-courses">
-          <p class="courses-label">Relevant Coursework</p>
-          <div class="courses-grid">
-            <span class="chip-course">Programming in Java</span>
-            <span class="chip-course">Data Structures</span>
-            <span class="chip-course">Logic and Design</span>
-            <span class="chip-course">Discrete Mathematics</span>
-            <span class="chip-course">Data Science Systems</span>
-            <span class="chip-course">Full Stack Web Development</span>
-            <span class="chip-course">Foundations of Accounting</span>
-            <span class="chip-course">Microeconomics</span>
-            <span class="chip-course">Managing Negotiations</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="edu-card glass leadership-card">
-        <div class="edu-top">
-          <img src="img/case .jpg" alt="The Brotherhood" class="edu-school-img" />
-          <div>
-            <span class="edu-dates">September 2024 — Present</span>
-            <h3>Vice President of Public Relations</h3>
-            <h4>The Brotherhood · Case Western Reserve University</h4>
-          </div>
-        </div>
-        <ul class="tl-bullets">
-          <li>Spearheaded event marketing strategy for the Fall semester, increasing average event attendance by 30% (from 45 to 60+ attendees) through targeted cross-channel promotion.</li>
-          <li>Negotiated a unified campus calendar with 5 student organizations, preventing 3 major scheduling conflicts and saving an estimated $500 in wasted venue booking fees.</li>
-          <li>Plan and execute over 10 successful events by strategically managing outreach across flyers and social media channels.</li>
-        </ul>
-        <div class="tl-tags" style="margin-top:1rem">
-          <span class="chip-tech">Event Marketing</span>
-          <span class="chip-tech">Negotiation</span>
-          <span class="chip-tech">Leadership</span>
+      <div class="project">
+        <div class="project-head"><span class="project-name">AI Resume Analyzer</span><span class="badge">in progress</span></div>
+        <p>Matches resumes to job descriptions using embeddings and points out skill gaps.</p>
+        <div class="project-links">
+          <a href="https://github.com/adrientdonf/ai-resume-analyzer" target="_blank" rel="noopener">github</a>
         </div>
       </div>
     </div>
-  </div>
-</section>
+    <p class="more"><a href="projects.html">all projects →</a></p>
 
-<!-- CONTACT -->
-<section id="contact" class="section contact-section">
-  <div class="biome-tag">Contact</div>
-  <div class="summit-glow" aria-hidden="true"></div>
-  <div class="container reveal">
-    <div class="section-header centered">
-      <h2 class="section-heading">Get In Touch</h2>
-      <p class="section-sub">Open to internships, collaborations, and conversations.</p>
+    <div class="label">certificates</div>
+    <div class="certs spot">
+      <a class="cert" href="certificates/crowdstrike-incident-responder.pdf" target="_blank" rel="noopener"><span>Incident Responder</span><span>CrowdStrike</span></a>
+      <a class="cert" href="certificates/crowdstrike-falcon-120-investigation.pdf" target="_blank" rel="noopener"><span>Falcon 120: Investigation</span><span>CrowdStrike</span></a>
+      <a class="cert" href="certificates/crowdstrike-falcon-141-charlotte-ai.pdf" target="_blank" rel="noopener"><span>Falcon 141: Charlotte AI</span><span>CrowdStrike</span></a>
+      <a class="cert" href="certificates/crowdstrike-dsec-190-data-protection.pdf" target="_blank" rel="noopener"><span>DSEC 190: Data Protection</span><span>CrowdStrike</span></a>
+      <a class="cert" href="certificates/crowdstrike-soar-100-fusion.pdf" target="_blank" rel="noopener"><span>SOAR 100: Fusion</span><span>CrowdStrike</span></a>
+      <a class="cert" href="certificates/gca-openai-ai-professional.png" target="_blank" rel="noopener"><span>OpenAI: AI Professional</span><span>Global Career Accelerator</span></a>
+      <a class="cert" href="certificates/gca-loreal-ai-javascript.png" target="_blank" rel="noopener"><span>L'Oréal: AI and JavaScript</span><span>Global Career Accelerator</span></a>
+      <a class="cert" href="certificates/gca-intel-web-development.png" target="_blank" rel="noopener"><span>Intel: Web Development</span><span>Global Career Accelerator</span></a>
+      <a class="cert" href="certificates/gca-unesco-intercultural.png" target="_blank" rel="noopener"><span>UNESCO: Intercultural</span><span>Global Career Accelerator</span></a>
     </div>
-    <div class="contact-layout">
-      <div class="contact-links">
-        <a href="mailto:adrientdonf@gmail.com" class="contact-link-card glass">
-          <div class="clc-icon"><i class="fa-solid fa-envelope"></i></div>
-          <div class="clc-body">
-            <span class="clc-label">Email</span>
-            <span class="clc-val">adrientdonf@gmail.com</span>
-          </div>
-          <i class="fa-solid fa-arrow-right clc-arrow-fa"></i>
-        </a>
-        <a href="https://www.linkedin.com/in/adrien-donfack-134813379/" target="_blank" rel="noopener" class="contact-link-card glass">
-          <div class="clc-icon"><i class="fa-brands fa-linkedin-in"></i></div>
-          <div class="clc-body">
-            <span class="clc-label">LinkedIn</span>
-            <span class="clc-val">adrien-donfack-134813379</span>
-          </div>
-          <i class="fa-solid fa-arrow-right clc-arrow-fa"></i>
-        </a>
-        <a href="https://github.com/adrientdonf" target="_blank" rel="noopener" class="contact-link-card glass">
-          <div class="clc-icon"><i class="fa-brands fa-github"></i></div>
-          <div class="clc-body">
-            <span class="clc-label">GitHub</span>
-            <span class="clc-val">adrientdonf</span>
-          </div>
-          <i class="fa-solid fa-arrow-right clc-arrow-fa"></i>
-        </a>
-        <a href="Adrien_Resume.pdf" download class="contact-link-card glass">
-          <div class="clc-icon"><i class="fa-solid fa-file-arrow-down"></i></div>
-          <div class="clc-body">
-            <span class="clc-label">Resume</span>
-            <span class="clc-val">Download PDF</span>
-          </div>
-          <i class="fa-solid fa-arrow-right clc-arrow-fa"></i>
-        </a>
-      </div>
 
-      <form class="contact-form glass" id="contactForm" novalidate>
-        <h3>Send a Message</h3>
-        <div class="form-row">
-          <div class="form-field">
-            <label for="fname">Name</label>
-            <input type="text" id="fname" name="name" placeholder="Your name" autocomplete="name" />
-          </div>
-          <div class="form-field">
-            <label for="femail">Email</label>
-            <input type="email" id="femail" name="email" placeholder="your@email.com" autocomplete="email" />
-          </div>
-        </div>
-        <div class="form-field">
-          <label for="fmsg">Message</label>
-          <textarea id="fmsg" name="message" rows="5" placeholder="What's on your mind?"></textarea>
-        </div>
-        <button type="button" class="btn btn-primary" onclick="handleForm()">Send Message</button>
-        <p class="form-success" id="formOk" aria-live="polite">Message sent. I'll be in touch soon.</p>
-      </form>
-    </div>
-  </div>
-</section>
+    <section id="build">
+      <div class="label">currently building</div>
+      <div id="graph" class="graph" aria-label="GitHub contribution graph"></div>
+      <p id="graph-note" class="graph-note">loading my GitHub activity…</p>
+    </section>
+  </main>
 
-<!-- FOOTER -->
-<footer class="site-footer">
-  <div class="container footer-inner">
-    <p class="footer-name">Adrien Donfack</p>
-    <p class="footer-copy">Designed and built from scratch &copy; 2025</p>
-    <div class="footer-socials">
-      <a href="https://github.com/adrientdonf" target="_blank" rel="noopener" aria-label="GitHub">
-        <i class="fa-brands fa-github"></i>
-      </a>
-      <a href="https://www.linkedin.com/in/adrien-donfack-134813379/" target="_blank" rel="noopener" aria-label="LinkedIn">
-        <i class="fa-brands fa-linkedin-in"></i>
-      </a>
-      <a href="mailto:adrientdonf@gmail.com" aria-label="Email">
-        <i class="fa-solid fa-envelope"></i>
-      </a>
-    </div>
-  </div>
-</footer>
-
-<script>
-const root = document.documentElement;
-const themeBtn = document.getElementById('theme-toggle');
-let night = false;
-function setTheme(toNight) {
-  night = toNight;
-  root.setAttribute('data-theme', night ? 'night' : 'day');
-  if (night) { spawnFireflies(); showAurora(); hideStars(false); }
-  else { clearFireflies(); hideAurora(); hideStars(true); }
-}
-themeBtn.addEventListener('click', () => setTheme(!night));
-
-const hamburger = document.getElementById('hamburger');
-const mobileMenu = document.getElementById('mobileMenu');
-hamburger.addEventListener('click', () => {
-  const open = hamburger.classList.toggle('open');
-  mobileMenu.classList.toggle('open', open);
-  hamburger.setAttribute('aria-expanded', open);
-  mobileMenu.setAttribute('aria-hidden', !open);
-});
-function closeMobile() {
-  hamburger.classList.remove('open');
-  mobileMenu.classList.remove('open');
-  hamburger.setAttribute('aria-expanded', false);
-  mobileMenu.setAttribute('aria-hidden', true);
-}
-
-const navbar = document.getElementById('navbar');
-const scrollFill = document.getElementById('scrollFill');
-window.addEventListener('scroll', onScroll, { passive: true });
-function onScroll() {
-  const s = window.scrollY;
-  const maxS = document.documentElement.scrollHeight - window.innerHeight;
-  scrollFill.style.width = (s / maxS * 100) + '%';
-  navbar.classList.toggle('scrolled', s > 50);
-  let current = '';
-  document.querySelectorAll('section[id]').forEach(sec => {
-    if (s >= sec.offsetTop - 140) current = sec.id;
-  });
-  document.querySelectorAll('.nav-links a').forEach(a => {
-    a.classList.toggle('active', a.dataset.section === current);
-  });
-  const l1 = document.querySelector('.mtn-l1');
-  const l2 = document.querySelector('.mtn-l2');
-  const l3 = document.querySelector('.mtn-l3');
-  if (l1) l1.style.transform = `translateY(${s * 0.06}px)`;
-  if (l2) l2.style.transform = `translateY(${s * 0.12}px)`;
-  if (l3) l3.style.transform = `translateY(${s * 0.2}px)`;
-  revealAll();
-  trySkillBars();
-}
-
-function revealAll() {
-  document.querySelectorAll('.reveal:not(.in)').forEach(el => {
-    if (el.getBoundingClientRect().top < window.innerHeight - 80) el.classList.add('in');
-  });
-}
-
-let skillsDone = false;
-function trySkillBars() {
-  if (skillsDone) return;
-  const sec = document.getElementById('skills');
-  if (sec && sec.getBoundingClientRect().top < window.innerHeight - 60) {
-    skillsDone = true;
-    document.querySelectorAll('.skill-fill').forEach(f => {
-      setTimeout(() => { f.style.width = f.dataset.w + '%'; }, 150);
-    });
-  }
-}
-
-const roles = ['Full-Stack Developer', 'CS Student at CWRU', 'AI Enthusiast', 'Problem Solver'];
-let ri = 0, ci = 0, deleting = false;
-const roleEl = document.getElementById('roleText');
-function typeRole() {
-  const word = roles[ri];
-  if (!deleting) {
-    roleEl.textContent = word.slice(0, ++ci);
-    if (ci === word.length) { deleting = true; setTimeout(typeRole, 1800); return; }
-  } else {
-    roleEl.textContent = word.slice(0, --ci);
-    if (ci === 0) { deleting = false; ri = (ri + 1) % roles.length; }
-  }
-  setTimeout(typeRole, deleting ? 55 : 90);
-}
-typeRole();
-
-const starsLayer = document.getElementById('starsLayer');
-for (let i = 0; i < 120; i++) {
-  const s = document.createElement('div');
-  s.className = 'star';
-  s.style.cssText = `left:${Math.random()*100}%;top:${Math.random()*60}%;width:${1+Math.random()*2}px;height:${1+Math.random()*2}px;animation-delay:${Math.random()*5}s;animation-duration:${2+Math.random()*3}s;opacity:${0.4+Math.random()*0.6}`;
-  starsLayer.appendChild(s);
-}
-function hideStars(yes) { starsLayer.style.opacity = yes ? '0' : '1'; }
-
-const auroraEl = document.getElementById('aurora');
-function showAurora() { auroraEl.style.opacity = '1'; }
-function hideAurora() { auroraEl.style.opacity = '0'; }
-
-const cloudsWrap = document.getElementById('cloudsWrap');
-for (let i = 0; i < 6; i++) {
-  const c = document.createElement('div');
-  c.className = 'cloud';
-  c.style.cssText = `top:${5+Math.random()*30}%;width:${80+Math.random()*140}px;animation-delay:${-Math.random()*60}s;animation-duration:${50+Math.random()*40}s;opacity:${0.35+Math.random()*0.45}`;
-  cloudsWrap.appendChild(c);
-}
-
-const birdsWrap = document.getElementById('birdsWrap');
-for (let i = 0; i < 7; i++) {
-  const b = document.createElement('div');
-  b.className = 'bird';
-  b.style.cssText = `top:${8+Math.random()*28}%;animation-delay:${Math.random()*18}s;animation-duration:${10+Math.random()*8}s`;
-  b.innerHTML = `<svg viewBox="0 0 20 8" fill="none" stroke="currentColor" stroke-width="1.5" width="18" height="8"><path d="M0 4 Q5 0 10 4 Q15 0 20 4"/></svg>`;
-  birdsWrap.appendChild(b);
-}
-
-const firefliesWrap = document.getElementById('firefliesWrap');
-function spawnFireflies() {
-  for (let i = 0; i < 35; i++) {
-    const f = document.createElement('div');
-    f.className = 'firefly';
-    f.style.cssText = `left:${Math.random()*100}%;top:${30+Math.random()*60}%;animation-delay:${Math.random()*5}s;animation-duration:${2.5+Math.random()*3}s`;
-    firefliesWrap.appendChild(f);
-  }
-}
-function clearFireflies() { firefliesWrap.innerHTML = ''; }
-
-const leavesWrap = document.getElementById('leavesWrap');
-const leafPaths = ['M10 2 Q14 6 10 14 Q6 6 10 2','M2 10 Q10 6 16 10 Q10 16 2 10'];
-for (let i = 0; i < 14; i++) {
-  const l = document.createElement('div');
-  l.className = 'leaf';
-  l.style.cssText = `left:${Math.random()*100}%;animation-delay:${Math.random()*14}s;animation-duration:${7+Math.random()*7}s`;
-  l.innerHTML = `<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" width="16" height="16"><path d="${leafPaths[i%2]}"/></svg>`;
-  leavesWrap.appendChild(l);
-}
-
-const snowWrap = document.getElementById('snowflakesWrap');
-for (let i = 0; i < 45; i++) {
-  const f = document.createElement('div');
-  f.className = 'snowflake';
-  f.style.cssText = `left:${Math.random()*100}%;animation-delay:${Math.random()*12}s;animation-duration:${6+Math.random()*8}s;font-size:${9+Math.random()*10}px;opacity:${0.4+Math.random()*0.5}`;
-  f.textContent = '*';
-  snowWrap.appendChild(f);
-}
-
-const particlesWrap = document.getElementById('particlesWrap');
-for (let i = 0; i < 20; i++) {
-  const p = document.createElement('div');
-  p.className = 'particle';
-  p.style.cssText = `left:${Math.random()*100}%;top:${Math.random()*100}%;width:${2+Math.random()*3}px;height:${2+Math.random()*3}px;animation-delay:${Math.random()*7}s;animation-duration:${5+Math.random()*6}s`;
-  particlesWrap.appendChild(p);
-}
-
-document.querySelectorAll('a[href^="#"]').forEach(a => {
-  a.addEventListener('click', e => {
-    const t = document.querySelector(a.getAttribute('href'));
-    if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
-    closeMobile();
-  });
-});
-
-document.querySelectorAll('.skill-card, .contact-link-card').forEach(card => {
-  card.addEventListener('mousemove', e => {
-    const r = card.getBoundingClientRect();
-    const x = (e.clientX - r.left - r.width/2) / r.width * 10;
-    const y = (e.clientY - r.top - r.height/2) / r.height * -10;
-    card.style.transform = `perspective(500px) rotateX(${y}deg) rotateY(${x}deg) translateY(-4px)`;
-  });
-  card.addEventListener('mouseleave', () => { card.style.transform = ''; });
-});
-
-function handleForm() {
-  const n = document.getElementById('fname').value.trim();
-  const e = document.getElementById('femail').value.trim();
-  const m = document.getElementById('fmsg').value.trim();
-  if (!n || !e || !m) { alert('Please fill in all fields.'); return; }
-  const ok = document.getElementById('formOk');
-  ok.style.display = 'block';
-  document.getElementById('fname').value = '';
-  document.getElementById('femail').value = '';
-  document.getElementById('fmsg').value = '';
-  setTimeout(() => { ok.style.display = 'none'; }, 5000);
-}
-
-window.addEventListener('load', () => { revealAll(); trySkillBars(); });
-</script>
+  <footer>
+    <a class="resume" href="img/resume.pdf" target="_blank" rel="noopener">
+      <span class="circle"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      <span>open resume.pdf</span>
+    </a>
+  </footer>
 </body>
 </html>
