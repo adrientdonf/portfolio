@@ -355,3 +355,6 @@ p { margin: 0 0 16px; }
 .sub-page .c-arrow { color: var(--accent); opacity: .55; }
 .sub-page .crow:hover .c-arrow, .sub-page .crt:hover .c-arrow { opacity: 1; }
 .sub-page .crt-type { color: var(--accent); background: var(--chip); border-radius: 6px; padding: 2px 8px; }
+
+/* Mobile: never scroll sideways */
+html, body { max-width: 100%; overflow-x: clip; }
