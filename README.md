@@ -41,6 +41,3 @@ Plain HTML, CSS, and JavaScript. No framework and no build step.
     style.css, script.js  shared styles and behavior
     img/, certificates/   logos, resume, certificate files
 
-## Credit
-
-The layout and feel are inspired by [nic-nguyen.com](https://www.nic-nguyen.com/). All code and copy here are my own.
