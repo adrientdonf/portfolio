@@ -1,6 +1,7 @@
 (function () {
   var root = document.documentElement;
   var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  root.classList.add("js");
   try {
     var saved = localStorage.getItem("theme");
     if (saved) root.setAttribute("data-theme", saved);
@@ -12,7 +13,63 @@
     return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
   }
 
-  // word-by-word reveal; returns roughly how long it takes (ms)
+  // wait for the fonts so text doesn't jump when they swap in
+  function whenFontsReady(fn) {
+    var done = false;
+    function go() { if (done) return; done = true; fn(); }
+    setTimeout(go, 1500);
+    if (document.fonts && document.fonts.load) {
+      Promise.all([
+        document.fonts.load('400 17px "Inter"'),
+        document.fonts.load('600 17px "Inter"'),
+        document.fonts.load('400 14px "Geist Mono"')
+      ]).then(go, go);
+    } else {
+      go();
+    }
+  }
+
+  // everything outside the about text fades up as it comes into view
+  function smooth() {
+    var sel = [
+      "main h1",
+      "main .subtitle",
+      "main > .label",
+      ".entries > .entry",
+      "main > .more",
+      ".projects > .project",
+      ".certs > .cert",
+      "footer .resume"
+    ].join(",");
+    var els = Array.prototype.slice.call(document.querySelectorAll(sel));
+    els.forEach(function (el) { el.classList.add("rv"); });
+
+    if (reduced || !("IntersectionObserver" in window)) {
+      els.forEach(function (el) { el.classList.add("in"); });
+      return;
+    }
+
+    var first = true;
+    var io = new IntersectionObserver(function (items) {
+      var batch = items
+        .filter(function (i) { return i.isIntersecting; })
+        .map(function (i) { return i.target; });
+      if (!batch.length) return;
+      batch.sort(function (a, b) { return a.compareDocumentPosition(b) & 4 ? -1 : 1; });
+      batch.forEach(function (el, k) {
+        var d = first
+          ? (k < 3 ? k * 110 : 800 + Math.min(k - 3, 8) * 110)
+          : Math.min(k, 6) * 90;
+        el.style.setProperty("--rd", d + "ms");
+        el.classList.add("in");
+        io.unobserve(el);
+      });
+      first = false;
+    }, { threshold: 0.15, rootMargin: "0px 0px -6% 0px" });
+    els.forEach(function (el) { io.observe(el); });
+  }
+
+  // word-by-word reveal for the about text; returns roughly how long it takes (ms)
   function reveal() {
     if (reduced) return 0;
     var n = 0;
@@ -151,22 +208,54 @@
     io.observe(build);
   }
 
+  function start() {
+    try {
+      smooth();
+      var total = reveal();
+      shine(total);
+      entries();
+      watchBuild();
+    } catch (e) {
+      var all = document.querySelectorAll(".rv");
+      for (var i = 0; i < all.length; i++) all[i].classList.add("in");
+      var b = document.getElementById("build");
+      if (b) b.classList.add("in");
+    }
+    root.classList.add("ready");
+  }
+
   document.addEventListener("DOMContentLoaded", function () {
-    var total = reveal();
-    shine(total);
-    entries();
     graph();
-    watchBuild();
+    whenFontsReady(start);
 
     var links = document.querySelectorAll(".menu a");
     for (var i = 0; i < links.length; i++) links[i].style.setProperty("--n", i);
 
     var dot = document.getElementById("theme-toggle");
     if (dot) {
+      var switching = false;
       dot.addEventListener("click", function () {
+        if (switching) return;
         var next = current() === "dark" ? "light" : "dark";
-        root.setAttribute("data-theme", next);
-        try { localStorage.setItem("theme", next); } catch (e) {}
+        function apply() {
+          root.setAttribute("data-theme", next);
+          try { localStorage.setItem("theme", next); } catch (e) {}
+        }
+        if (!document.startViewTransition || reduced) { apply(); return; }
+        var r = dot.getBoundingClientRect();
+        var x = r.left + r.width / 2, y = r.top + r.height / 2;
+        var radius = Math.hypot(Math.max(x, window.innerWidth - x), Math.max(y, window.innerHeight - y));
+        switching = true;
+        root.classList.add("theme-switching");
+        var t = document.startViewTransition(apply);
+        t.ready.then(function () {
+          root.animate(
+            { clipPath: ["circle(0px at " + x + "px " + y + "px)", "circle(" + radius + "px at " + x + "px " + y + "px)"] },
+            { duration: 750, easing: "cubic-bezier(.4, 0, .2, 1)", pseudoElement: "::view-transition-new(root)" }
+          );
+        });
+        t.finished.then(done, done);
+        function done() { switching = false; root.classList.remove("theme-switching"); }
       });
     }
 
