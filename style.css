@@ -345,3 +345,13 @@ p { margin: 0 0 16px; }
 .crt:hover .crt-name, .crt:hover .c-arrow { color: var(--accent); }
 .crt:hover .c-arrow { transform: translateX(4px); }
 @media (prefers-reduced-motion: reduce) { .crt { animation: none; opacity: 1; transform: none; } }
+
+/* Sub-pages: quiet blue accents */
+.sub-page .page-title::after { content: ""; display: block; width: 28px; height: 2px; margin-top: 14px; background: var(--accent); border-radius: 2px; }
+.sub-page .c-label, .sub-page .crt-group { color: var(--accent); }
+.sub-page .crt-group::before { content: ""; display: inline-block; width: 6px; height: 6px; margin-right: 9px; border-radius: 50%; background: var(--accent); vertical-align: 1px; }
+.sub-page .crow, .sub-page .crt { border-top-color: color-mix(in srgb, var(--accent) 22%, var(--border)); }
+.sub-page .crow:last-child, .sub-page .crt:last-child { border-bottom-color: color-mix(in srgb, var(--accent) 22%, var(--border)); }
+.sub-page .c-arrow { color: var(--accent); opacity: .55; }
+.sub-page .crow:hover .c-arrow, .sub-page .crt:hover .c-arrow { opacity: 1; }
+.sub-page .crt-type { color: var(--accent); background: var(--chip); border-radius: 6px; padding: 2px 8px; }
