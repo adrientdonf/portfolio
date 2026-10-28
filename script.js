@@ -167,29 +167,133 @@
   function graph() {
     var el = document.getElementById("graph");
     var note = document.getElementById("graph-note");
-    if (!el || !note) return;
+    var build = document.getElementById("build");
+    if (!el || !note || !build) return;
+
+    el.setAttribute("role", "grid");
+    el.setAttribute("aria-label", "GitHub contributions over the last year");
+
+    var tooltip = build.querySelector(".graph-tooltip");
+    if (!tooltip) {
+      tooltip = document.createElement("div");
+      tooltip.className = "graph-tooltip";
+      tooltip.setAttribute("role", "status");
+      tooltip.setAttribute("aria-hidden", "true");
+
+      var countLine = document.createElement("div");
+      countLine.className = "graph-tooltip-count";
+      var dateLine = document.createElement("div");
+      dateLine.className = "graph-tooltip-date";
+
+      tooltip.appendChild(countLine);
+      tooltip.appendChild(dateLine);
+      build.appendChild(tooltip);
+    }
+
+    var countLine = tooltip.querySelector(".graph-tooltip-count");
+    var dateLine = tooltip.querySelector(".graph-tooltip-date");
+
+    function hideTooltip() {
+      tooltip.classList.remove("is-visible");
+      tooltip.setAttribute("aria-hidden", "true");
+    }
+
+    function showTooltip(cell, contribution) {
+      var count = contribution.count || 0;
+      var date = new Date(contribution.date + "T00:00:00");
+      countLine.textContent = count + (count === 1 ? " contribution" : " contributions");
+      dateLine.textContent = date.toLocaleDateString("en-US", {
+        weekday: "short",
+        month: "short",
+        day: "numeric",
+        year: "numeric"
+      });
+
+      tooltip.classList.add("is-visible");
+      tooltip.setAttribute("aria-hidden", "false");
+
+      var buildRect = build.getBoundingClientRect();
+      var cellRect = cell.getBoundingClientRect();
+      var half = tooltip.offsetWidth / 2;
+      var left = cellRect.left + cellRect.width / 2 - buildRect.left;
+      left = Math.max(half + 4, Math.min(buildRect.width - half - 4, left));
+
+      var top = cellRect.top - buildRect.top - tooltip.offsetHeight - 8;
+      if (top < 0) top = cellRect.bottom - buildRect.top + 8;
+
+      tooltip.style.left = left + "px";
+      tooltip.style.top = top + "px";
+    }
+
     fetch("https://github-contributions-api.jogruber.de/v4/adrientdonf?y=last")
-      .then(function (r) { return r.json(); })
+      .then(function (r) {
+        if (!r.ok) throw new Error("Contribution request failed");
+        return r.json();
+      })
       .then(function (d) {
         var list = d.contributions || [];
-        if (!list.length) throw new Error("empty");
+        if (!list.length) throw new Error("No contribution data");
+
+        el.textContent = "";
         var pad = new Date(list[0].date + "T00:00:00").getDay();
         var frag = document.createDocumentFragment();
-        var total = 0, idx = 0;
-        function add(cls, title) {
-          var i = document.createElement("i");
-          if (cls) i.className = cls;
-          if (title) i.title = title;
-          i.style.setProperty("--d", (Math.floor(idx / 7) * 14 + (idx % 7) * 10) + "ms");
-          idx++;
-          frag.appendChild(i);
-          return i;
+        var total = 0;
+        var idx = 0;
+
+        function addPadding() {
+          var cell = document.createElement("i");
+          cell.className = "pad";
+          cell.setAttribute("aria-hidden", "true");
+          frag.appendChild(cell);
         }
-        for (var p = 0; p < pad; p++) add("pad");
+
+        function addContribution(c) {
+          var cell = document.createElement("i");
+          cell.className = "l" + c.level;
+          cell.setAttribute("role", "gridcell");
+          cell.setAttribute("tabindex", "0");
+
+          var date = new Date(c.date + "T00:00:00").toLocaleDateString("en-US", {
+            weekday: "long",
+            month: "long",
+            day: "numeric",
+            year: "numeric"
+          });
+          cell.setAttribute(
+            "aria-label",
+            (c.count || 0) + ((c.count || 0) === 1 ? " contribution on " : " contributions on ") + date
+          );
+
+          cell.style.setProperty(
+            "--d",
+            (Math.floor(idx / 7) * 14 + (idx % 7) * 10) + "ms"
+          );
+          idx++;
+
+          cell.addEventListener("pointerenter", function (e) {
+            if (e.pointerType !== "touch") showTooltip(cell, c);
+          });
+          cell.addEventListener("pointerleave", function (e) {
+            if (e.pointerType !== "touch") hideTooltip();
+          });
+          cell.addEventListener("focus", function () {
+            showTooltip(cell, c);
+          });
+          cell.addEventListener("blur", hideTooltip);
+          cell.addEventListener("click", function () {
+            showTooltip(cell, c);
+          });
+
+          frag.appendChild(cell);
+        }
+
+        for (var p = 0; p < pad; p++) addPadding();
+
         list.forEach(function (c) {
-          total += c.count;
-          add("l" + c.level, c.count + " on " + c.date);
+          total += c.count || 0;
+          addContribution(c);
         });
+
         el.appendChild(frag);
         note.textContent = total + " contributions in the last year";
       })
@@ -197,8 +301,11 @@
         el.style.display = "none";
         note.innerHTML = 'see my activity on <a href="https://github.com/adrientdonf" target="_blank" rel="noopener">GitHub</a>';
       });
-  }
 
+    document.addEventListener("pointerdown", function (e) {
+      if (!el.contains(e.target)) hideTooltip();
+    });
+  }
   function watchBuild() {
     var build = document.getElementById("build");
     if (!build) return;
